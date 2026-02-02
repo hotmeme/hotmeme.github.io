@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vibes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(180deg,
+                #1a0a2e 0%,
+                #3d1a5c 25%,
+                #6b2d7b 50%,
+                #c44e8a 75%,
+                #ff8c69 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .wave {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 200px;
+            background: linear-gradient(transparent, rgba(138, 43, 226, 0.1));
+            animation: drift 8s ease-in-out infinite;
+        }
+
+        .wave::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.05)' d='M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+            background-size: 1440px 200px;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-25%); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .intro {
+            margin-bottom: 3rem;
+        }
+
+        .intro h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #e0b0ff 50%, #ff8c69 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            opacity: 0.9;
+            line-height: 1.7;
+            max-width: 540px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 2.5rem 0;
+        }
+
+        .tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .journey {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .journey span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .journey .arrow {
+            opacity: 0.4;
+        }
+
+        .current {
+            color: #ff8c69;
+            font-weight: 500;
+        }
+
+        .links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            position: relative;
+        }
+
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .links a:hover {
+            opacity: 1;
+        }
+
+        .links a:hover::after {
+            width: 100%;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.4;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 3rem 1.5rem;
+            }
+
+            .journey {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .journey .arrow {
+                display: none;
+            }
+
+            .footer {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="wave"></div>
+
+    <div class="container">
+        <div class="intro">
+            <h1>hey, i'm garrett</h1>
+            <p>theoretical chemist by day, chasing waves and riffs the rest of the time. currently exploring the edges of what we know about molecules at stanford.</p>
+        </div>
+
+        <div class="tags">
+            <span class="tag">skateboarding</span>
+            <span class="tag">guitar</span>
+            <span class="tag">bjj</span>
+            <span class="tag">psych rock</span>
+            <span class="tag">experimental</span>
+            <span class="tag">theoretical chemistry</span>
+        </div>
+
+        <div class="journey">
+            <span>irvine</span>
+            <span class="arrow">→</span>
+            <span>ucla</span>
+            <span class="arrow">→</span>
+            <span class="current">stanford phd</span>
+        </div>
+
+        <div class="links">
+            <a href="#">github</a>
+            <a href="#">scholar</a>
+            <a href="#">twitter</a>
+            <a href="#">email</a>
+        </div>
+    </div>
+
+    <div class="footer">socal → bay</div>
+</body>
+</html>
